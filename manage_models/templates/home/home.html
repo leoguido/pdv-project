@@ -1,25 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punto de venta</title>
-</head>
-<body>
-    <header>
-        <h1>Punto de venta</h1>
-        <h2><a href="{% url 'logout' %}">Cerrar sesión</a></h2>
-    </header>
-    <section>
-        {% if user.tipo_usuario == 'A' %}    
-            <a href="{% url 'usuarios' %}">Usuarios</a>
-            <a href="#">Marcas</a>
-            <a href="#">Clientes</a>
-            <a href="#">Cajas</a>
-            <a href="#">Reportes de venta</a>
-        {% endif %}
-    </section>
+{% extends 'home/base.html' %}
 
-</body>
-</html>
+{% block content %}    
+<div class="container opciones_fondo"> 
+    <div class="row opciones">
+        {% if user.details.tipo_usuario == 'A' %}
+        <div class="col-md-5 home_opcion m-3 mx-auto opcion1"> 
+            <i class="bi bi-people icono"></i>
+            <a href="{% url 'usuarios' %}" class="opcion_link">Usuarios</a>
+        </div>   
+        <div class="col-md-5 home_opcion m-3 mx-auto opcion2"> 
+            <i class="bi bi-building icono"></i>
+            <a href="#" class="opcion_link">Marcas</a>
+        </div>   
+        <div class="col-md-5 home_opcion m-3 mx-auto opcion2">  
+            <i class="bi bi-person icono"></i>   
+            <a href="#" class="opcion_link">Clientes</a>
+        </div>  
+        {% endif %} 
+        <div class="col-md-5 home_opcion m-3 mx-auto opcion1"> 
+            <i class="bi bi-archive icono"></i>
+            <a href="#" class="opcion_link">Cajas</a>
+        </div>   
+        <div class="col-md-5 home_opcion m-3 mx-auto opcion2"> 
+            <i class="bi bi-coin icono"></i>
+            <a href="#" class="opcion_link">Reportes de venta</a>
+        </div>   
+    </div>
+</div>
+{% endblock %}

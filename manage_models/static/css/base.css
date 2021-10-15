@@ -1,0 +1,144 @@
+:root{
+    --fondo : #f0f0f0;
+    --fuente-grande: 'Inconsolata', monospace;;
+    --fuente-pequena: 'Quicksand', sans-serif;
+    --color1: #1C0C5B;
+    --color2: #3D2C8D;
+    --color3: #916BBF;
+    --color4: #C996CC;
+}
+
+/*BASE*/
+body{
+    margin: 0;
+    background-color: var(--fondo);
+}
+header{
+    margin: 0;
+    padding: 10px 0;
+    -webkit-box-shadow: 0px 23px 10px -30px #000000; 
+    box-shadow: 0px 23px 15px -30px #000000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+}
+.titulo{
+    margin: 0 15px;
+    font-family: var(--fuente-grande);
+    color: var(--color1);
+    font-size: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+.titulo:hover{
+    color: var(--color1);
+}
+.usuario{
+    margin: 0 5px;
+}
+.logout{
+    font-family: var(--fuente-pequena);
+    color: var(--color3);
+    text-decoration: none;
+}
+.logout:hover{
+    color: var(--color4);
+}
+.saludo{
+    font-family: var(--fuente-pequena);
+    color: var(--color3);
+}
+
+/*HOME*/
+.opciones{
+    padding: 50px 20px;
+    background-color: white;
+    -webkit-box-shadow: 0px 23px 10px -30px #000000; 
+    box-shadow: 0px 23px 30px -30px #000000;
+}
+.opciones_fondo{
+    margin-top: 100px;
+}
+.home_opcion{
+    padding: 25px 50px;
+}
+.opcion1{
+    background-color: var(--color2);
+}
+.opcion2{
+    background-color: var(--color3);
+}
+.opcion_link{
+    text-decoration: none;
+    font-family: var(--fuente-pequena);
+    color: white;
+    font-size: 28px;
+}
+.opcion_link:hover{
+    color: var(--color1);
+}
+.icono{
+    color: white;
+    font-size: 30px;
+}
+
+/*LOGIN*/
+.login_contenedor{
+    width: 500px;
+    -webkit-box-shadow: 0px 23px 10px -30px #000000; 
+    box-shadow: 0px 23px 30px -30px #000000;
+    background-color: white;
+    padding: 20px 0 ;
+    margin: 300px auto;
+}
+label{
+    font-family: var(--fuente-pequena);
+    color: var(--color1);
+    margin-left: 10px;
+}
+form input{
+    font-family: var(--fuente-pequena);
+    color: var(--color1);
+    margin-left: 10px;
+}
+
+/*USUARIOS*/
+.usuarios_titulo{
+    font-family: var(--fuente-grande);
+    color: var(--color1);
+}
+.barra_busqueda{
+    margin: 0 10px 25px 10px;
+}
+.usuarios_maincontainer{
+    background-color: white;
+    margin-top: 25px;
+    -webkit-box-shadow: 0px 23px 10px -30px #000000; 
+    box-shadow: 0px 23px 30px -30px #000000;
+}
+.usuarios_espaciado{
+    margin: 0 10px;
+}
+.deleteuser{
+    padding: 2px 5px;
+    background-color: var(--color1);
+    border: none;
+}
+.deleteuser:hover{
+    background-color: var(--color2);
+}
+.user_butonicon{
+    color: white;
+}
+
+.link_registrar_usuario{
+    text-decoration: none;
+    color: var(--color1);
+    font-family: var(--fuente-pequena);
+    font-size: 20px;
+}
+.link_registrar_usuario:hover{
+    color: black;
+}

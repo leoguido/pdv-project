@@ -1,0 +1,9 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<form method="POST">{% csrf_token %}
+    {{ user_form1.as_p }}
+    {{ user_form2.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+{% endblock %}
