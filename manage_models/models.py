@@ -33,10 +33,10 @@ class Usuario(models.Model):
     telefono = models.CharField(max_length=10)
     tipo_usuario = models.CharField(choices=TIPOS_USUARIO, max_length=1)
 
-@receiver(post_save, sender=User)
-def crear_usuario(sender, instance, created, **kwargs):
-    if created:
-        Usuario.objects.create(usuario=instance)
+#@receiver(post_save, sender=User)
+#def crear_usuario(sender, instance, created, **kwargs):
+#    if created:
+#        Usuario.objects.create(usuario=instance)
 
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)

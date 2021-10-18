@@ -112,6 +112,9 @@ form input{
 .barra_busqueda{
     margin: 0 10px 25px 10px;
 }
+.buscar_boton{
+    color: var(--color2);
+}
 .usuarios_maincontainer{
     background-color: white;
     margin-top: 25px;

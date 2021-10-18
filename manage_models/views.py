@@ -1,7 +1,9 @@
+from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render , HttpResponse
 from .models import Usuario
 from .forms import UserForm , UsuarioForm
 from django.contrib.auth.models import User
+import json
 
 
 def home(request):
@@ -18,11 +20,12 @@ def usuarios(request):
 def registrar_usuario(request):
     if request.method == 'POST':
         form1 = UserForm(request.POST)
-        if form1.is_valid():
-            form1.save()
-            form2 = UsuarioForm(request.POST , instance=Usuario.objects.get(usuario=User.objects.get(username=request.POST['username'])))
-            if form2.is_valid():
-                form2.save()
+        form2 = UsuarioForm(request.POST)
+        if form1.is_valid() and form2.is_valid():
+            usuario1 = form1.save()
+            usuario2 = form2.save(commit=False)
+            usuario2.usuario = usuario1
+            usuario2.save()
             return redirect('usuarios')
     else:
         form1 = UserForm()
@@ -48,3 +51,17 @@ def editar_usuario(request, pk):
         form1 = UserForm(instance=usuario)
         form2 = UsuarioForm(instance=usuario)
         return render(request, 'manage_models/usuarios_edit.html' , {'user_form1' : form1 , 'user_form2' : form2})
+
+def buscar_usuario(request):
+    data = request.GET['busqueda']
+    usuarios_filtrados =  User.objects.filter(username__icontains=data)
+    usuarios_nombres = []
+    print(usuarios_filtrados)
+    for usuario in usuarios_filtrados:
+        datos = {}
+        datos['username'] = usuario.username
+        datos['email'] = usuario.email
+        datos['telefono'] = usuario.details.telefono
+        usuarios_nombres.append(datos)
+
+    return HttpResponse(json.dumps(usuarios_nombres) , 'application/json')
