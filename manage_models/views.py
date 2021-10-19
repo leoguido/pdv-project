@@ -1,8 +1,9 @@
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render , HttpResponse
 from .models import Usuario
-from .forms import UserForm , UsuarioForm
+from .forms import UserForm , UsuarioForm, ClienteForm
 from django.contrib.auth.models import User
+from .models import Cliente
 import json
 
 
@@ -52,16 +53,101 @@ def editar_usuario(request, pk):
         form2 = UsuarioForm(instance=usuario)
         return render(request, 'manage_models/usuarios_edit.html' , {'user_form1' : form1 , 'user_form2' : form2})
 
-def buscar_usuario(request):
+def buscar_usuario_nombre(request):
     data = request.GET['busqueda']
-    usuarios_filtrados =  User.objects.filter(username__icontains=data)
+    usuarios_filtrados_nombre =  User.objects.filter(first_name__icontains=data)
     usuarios_nombres = []
-    print(usuarios_filtrados)
-    for usuario in usuarios_filtrados:
+    for usuario in usuarios_filtrados_nombre:
         datos = {}
+        datos['first_name'] = usuario.first_name
+        datos['last_name'] = usuario.last_name
         datos['username'] = usuario.username
         datos['email'] = usuario.email
         datos['telefono'] = usuario.details.telefono
+        datos['tipo_usuario'] = usuario.details.tipo_usuario
+        datos['pk'] = usuario.pk
         usuarios_nombres.append(datos)
 
     return HttpResponse(json.dumps(usuarios_nombres) , 'application/json')
+
+def buscar_usuario_apellidos(request):
+    data = request.GET['busqueda']
+    usuarios_filtrados_nombre =  User.objects.filter(last_name__icontains=data)
+    usuarios_nombres = []
+    for usuario in usuarios_filtrados_nombre:
+        datos = {}
+        datos['first_name'] = usuario.first_name
+        datos['last_name'] = usuario.last_name
+        datos['username'] = usuario.username
+        datos['email'] = usuario.email
+        datos['telefono'] = usuario.details.telefono
+        datos['tipo_usuario'] = usuario.details.tipo_usuario
+        datos['pk'] = usuario.pk
+        usuarios_nombres.append(datos)
+
+    return HttpResponse(json.dumps(usuarios_nombres) , 'application/json')
+
+def buscar_usuario_email(request):
+    data = request.GET['busqueda']
+    usuarios_filtrados_nombre =  User.objects.filter(email__icontains=data)
+    usuarios_nombres = []
+    for usuario in usuarios_filtrados_nombre:
+        datos = {}
+        datos['first_name'] = usuario.first_name
+        datos['last_name'] = usuario.last_name
+        datos['username'] = usuario.username
+        datos['email'] = usuario.email
+        datos['telefono'] = usuario.details.telefono
+        datos['tipo_usuario'] = usuario.details.tipo_usuario
+        datos['pk'] = usuario.pk
+        usuarios_nombres.append(datos)
+
+    return HttpResponse(json.dumps(usuarios_nombres) , 'application/json')
+
+def buscar_usuario_telefono(request):
+    data = request.GET['busqueda']
+    usuarios_filtrados_nombre =  Usuario.objects.filter(telefono__icontains=data)
+    usuarios_nombres = []
+    for usuario in usuarios_filtrados_nombre:
+        datos = {}
+        datos['first_name'] = usuario.usuario.first_name
+        datos['last_name'] = usuario.usuario.last_name
+        datos['username'] = usuario.usuario.username
+        datos['email'] = usuario.usuario.email
+        datos['telefono'] = usuario.telefono
+        datos['tipo_usuario'] = usuario.tipo_usuario
+        datos['pk'] = usuario.usuario.pk
+        usuarios_nombres.append(datos)
+
+    return HttpResponse(json.dumps(usuarios_nombres) , 'application/json')
+
+def buscar_usuario_tipo(request):
+    data = request.GET['busqueda']
+    usuarios_filtrados_nombre =  Usuario.objects.filter(tipo_usuario__icontains=data)
+    usuarios_nombres = []
+    for usuario in usuarios_filtrados_nombre:
+        datos = {}
+        datos['first_name'] = usuario.usuario.first_name
+        datos['last_name'] = usuario.usuario.last_name
+        datos['username'] = usuario.usuario.username
+        datos['email'] = usuario.usuario.email
+        datos['telefono'] = usuario.telefono
+        datos['tipo_usuario'] = usuario.tipo_usuario
+        datos['pk'] = usuario.usuario.pk
+        usuarios_nombres.append(datos)
+
+    return HttpResponse(json.dumps(usuarios_nombres) , 'application/json')
+
+def clientes(request):
+    clientes_lista = Cliente.objects.all()
+    return render(request, 'manage_models/clientes.html' , {'clientes':clientes_lista})
+
+def registrar_cliente(request):
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('clientes')
+    else:
+        form = ClienteForm()
+        return render(request , 'manage_models/clientes_reg.html' , {'form':form})

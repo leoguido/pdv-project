@@ -33,16 +33,17 @@ class Usuario(models.Model):
     telefono = models.CharField(max_length=10)
     tipo_usuario = models.CharField(choices=TIPOS_USUARIO, max_length=1)
 
-#@receiver(post_save, sender=User)
-#def crear_usuario(sender, instance, created, **kwargs):
-#    if created:
-#        Usuario.objects.create(usuario=instance)
-
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     correo_electronico = models.EmailField(null=True)
     telefono = models.CharField(max_length=10)
+    rfc = models.CharField(max_length=13, default='')
+    razon_social = models.CharField(max_length=100, default='')
+    domicilio = models.CharField(max_length=100, default='')
+
+    def __str__(self):
+        return self.razon_social
 
 class Venta(models.Model):
     fecha_venta = models.DateTimeField(auto_now_add=True)
