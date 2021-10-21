@@ -1,0 +1,18 @@
+{% extends 'home/base.html' %}
+
+{% block content %}    
+<div class="container opciones_fondo"> 
+    <div class="row opciones">
+        {% if user.details.tipo_usuario == 'A' %}
+        <div class="col-md-5 home_opcion m-3 mx-auto opcion1"> 
+            <i class="bi bi-archive icono"></i>
+            <a href="{% url 'cajas_lista' %}" class="opcion_link">Administrar cajas</a>
+        </div>   
+        {% endif %} 
+        <div class="col-md-5 home_opcion m-3 mx-auto opcion2"> 
+            <i class="bi bi-archive icono"></i>
+            <a href="#" class="opcion_link">Usar cajas</a>
+        </div>   
+    </div>
+</div>
+{% endblock %}

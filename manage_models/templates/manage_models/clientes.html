@@ -1,9 +1,31 @@
 {% extends 'home/base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="usuarios_maincontainer container">
     <h2 class="usuarios_titulo">| Clientes</h2>
     <hr>
+    <input type="text" id="buscar_nombre_input" placeholder="nombre" class="barra_busqueda">
+    <button id="buscar_nombre" class="btn buscar_boton"><i class="bi bi-search"></i></button>
+
+    <input type="text" id="buscar_apellidos_input" placeholder="apellidos" class="barra_busqueda">
+    <button id="buscar_apellidos" class="btn buscar_boton"><i class="bi bi-search"></i></button>
+
+
+    <input type="text" id="buscar_email_input" placeholder="email" class="barra_busqueda">
+    <button id="buscar_email" class="btn buscar_boton"><i class="bi bi-search"></i></button>
+
+    <input type="text" id="buscar_telefono_input" placeholder="telefono" class="barra_busqueda">
+    <button id="buscar_telefono" class="btn buscar_boton"><i class="bi bi-search"></i></button>
+
+    <input type="text" id="buscar_rfc_input" placeholder="rfc" class="barra_busqueda">
+    <button id="buscar_rfc" class="btn buscar_boton"><i class="bi bi-search"></i></button>
+
+    <input type="text" id="buscar_razon_input" placeholder="razon social" class="barra_busqueda">
+    <button id="buscar_razon" class="btn buscar_boton"><i class="bi bi-search"></i></button>
+
+    <input type="text" id="buscar_domicilio_input" placeholder="domicilio" class="barra_busqueda">
+    <button id="buscar_domicilio" class="btn buscar_boton"><i class="bi bi-search"></i></button>
     <table>
         <thead> 
             <tr>
@@ -30,7 +52,7 @@
                 </th>
             </tr>
         </thead>
-        <tbody id="tabla_usuarios">
+        <tbody id="tabla_clientes">
             {% for cliente in clientes %}
             <tr>
                 <td>
@@ -54,6 +76,12 @@
                 <td >
                     <p class="usuarios_tablecontent usuarios_espaciado">{{cliente.domicilio}}</p>
                 </td>
+                <td >
+                    <a href="{% url 'borrar_cliente' pk=cliente.pk %}" class="deleteuser"><i class="bi bi-x user_butonicon"></i></a>
+                </td>
+                <td >
+                    <a href="{% url 'editar_cliente' pk=cliente.pk %}" class="deleteuser"><i class="bi bi-pencil-fill user_butonicon"></i></i></a>
+                </td>
             </tr>
             {%endfor%}
         </tbody> 
@@ -61,4 +89,6 @@
     <hr>
     <a href="{% url 'registrar_cliente' %}" class="link_registrar_usuario">Registrar nuevo cliente</a>
 </div>
+
+<script src="{% static '/table_clients.js' %}"></script>
 {% endblock %}

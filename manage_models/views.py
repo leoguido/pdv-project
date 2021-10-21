@@ -1,9 +1,8 @@
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render , HttpResponse
-from .models import Usuario
-from .forms import UserForm , UsuarioForm, ClienteForm
+from .models import Usuario , Cliente , Caja
+from .forms import UserForm , UsuarioForm, ClienteForm, CajaForm
 from django.contrib.auth.models import User
-from .models import Cliente
 import json
 
 
@@ -151,3 +150,191 @@ def registrar_cliente(request):
     else:
         form = ClienteForm()
         return render(request , 'manage_models/clientes_reg.html' , {'form':form})
+
+def borrar_cliente(request , pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+    cliente.delete()
+    return redirect('clientes')
+
+def editar_cliente(request, pk):
+    cliente = get_object_or_404(Cliente, pk=pk)
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('clientes')
+    else:
+        form = ClienteForm(instance=cliente)
+        return render(request, 'manage_models/clientes_edit.html' , {'form':form})
+
+def buscar_cliente_nombre(request):
+    print(request.GET)
+    data = request.GET['busqueda']
+    clientes_filtrados_nombre =  Cliente.objects.filter(nombre__icontains=data)
+    clientes_nombres = []
+    for cliente in clientes_filtrados_nombre:
+        datos = {}
+        datos['nombre'] = cliente.nombre
+        datos['apellido'] = cliente.apellido
+        datos['rfc'] = cliente.rfc
+        datos['correo_electronico'] = cliente.correo_electronico
+        datos['telefono'] = cliente.telefono
+        datos['razon_social'] = cliente.razon_social
+        datos['pk'] = cliente.pk
+        datos['domicilio'] = cliente.domicilio
+        clientes_nombres.append(datos)
+
+    return HttpResponse(json.dumps(clientes_nombres) , 'application/json')
+
+def buscar_cliente_apellido(request):
+    data = request.GET['busqueda']
+    clientes_filtrados_nombre =  Cliente.objects.filter(apellido__icontains=data)
+    clientes_nombres = []
+    for cliente in clientes_filtrados_nombre:
+        datos = {}
+        datos['nombre'] = cliente.nombre
+        datos['apellido'] = cliente.apellido
+        datos['rfc'] = cliente.rfc
+        datos['correo_electronico'] = cliente.correo_electronico
+        datos['telefono'] = cliente.telefono
+        datos['razon_social'] = cliente.razon_social
+        datos['pk'] = cliente.pk
+        datos['domicilio'] = cliente.domicilio
+        clientes_nombres.append(datos)
+
+    return HttpResponse(json.dumps(clientes_nombres) , 'application/json')
+
+def buscar_cliente_email(request):
+    data = request.GET['busqueda']
+    clientes_filtrados_nombre =  Cliente.objects.filter(correo_electronico__icontains=data)
+    clientes_nombres = []
+    for cliente in clientes_filtrados_nombre:
+        datos = {}
+        datos['nombre'] = cliente.nombre
+        datos['apellido'] = cliente.apellido
+        datos['rfc'] = cliente.rfc
+        datos['correo_electronico'] = cliente.correo_electronico
+        datos['telefono'] = cliente.telefono
+        datos['razon_social'] = cliente.razon_social
+        datos['pk'] = cliente.pk
+        datos['domicilio'] = cliente.domicilio
+        clientes_nombres.append(datos)
+
+    return HttpResponse(json.dumps(clientes_nombres) , 'application/json')
+
+def buscar_cliente_telefono(request):
+    data = request.GET['busqueda']
+    clientes_filtrados_nombre =  Cliente.objects.filter(telefono__icontains=data)
+    clientes_nombres = []
+    for cliente in clientes_filtrados_nombre:
+        datos = {}
+        datos['nombre'] = cliente.nombre
+        datos['apellido'] = cliente.apellido
+        datos['rfc'] = cliente.rfc
+        datos['correo_electronico'] = cliente.correo_electronico
+        datos['telefono'] = cliente.telefono
+        datos['razon_social'] = cliente.razon_social
+        datos['pk'] = cliente.pk
+        datos['domicilio'] = cliente.domicilio
+        clientes_nombres.append(datos)
+
+    return HttpResponse(json.dumps(clientes_nombres) , 'application/json')
+
+def buscar_cliente_rfc(request):
+    data = request.GET['busqueda']
+    clientes_filtrados_nombre =  Cliente.objects.filter(rfc__icontains=data)
+    clientes_nombres = []
+    for cliente in clientes_filtrados_nombre:
+        datos = {}
+        datos['nombre'] = cliente.nombre
+        datos['apellido'] = cliente.apellido
+        datos['rfc'] = cliente.rfc
+        datos['correo_electronico'] = cliente.correo_electronico
+        datos['telefono'] = cliente.telefono
+        datos['razon_social'] = cliente.razon_social
+        datos['pk'] = cliente.pk
+        datos['domicilio'] = cliente.domicilio
+        clientes_nombres.append(datos)
+
+    return HttpResponse(json.dumps(clientes_nombres) , 'application/json')
+
+def buscar_cliente_razon(request):
+    data = request.GET['busqueda']
+    clientes_filtrados_nombre =  Cliente.objects.filter(razon_social__icontains=data)
+    clientes_nombres = []
+    for cliente in clientes_filtrados_nombre:
+        datos = {}
+        datos['nombre'] = cliente.nombre
+        datos['apellido'] = cliente.apellido
+        datos['rfc'] = cliente.rfc
+        datos['correo_electronico'] = cliente.correo_electronico
+        datos['telefono'] = cliente.telefono
+        datos['razon_social'] = cliente.razon_social
+        datos['pk'] = cliente.pk
+        datos['domicilio'] = cliente.domicilio
+        clientes_nombres.append(datos)
+
+    return HttpResponse(json.dumps(clientes_nombres) , 'application/json')
+
+def buscar_cliente_domicilio(request):
+    data = request.GET['busqueda']
+    clientes_filtrados_nombre =  Cliente.objects.filter(domicilio__icontains=data)
+    clientes_nombres = []
+    for cliente in clientes_filtrados_nombre:
+        datos = {}
+        datos['nombre'] = cliente.nombre
+        datos['apellido'] = cliente.apellido
+        datos['rfc'] = cliente.rfc
+        datos['correo_electronico'] = cliente.correo_electronico
+        datos['telefono'] = cliente.telefono
+        datos['razon_social'] = cliente.razon_social
+        datos['pk'] = cliente.pk
+        datos['domicilio'] = cliente.domicilio
+        clientes_nombres.append(datos)
+
+    return HttpResponse(json.dumps(clientes_nombres) , 'application/json')
+
+def cajas(request):
+    return render(request, 'manage_models/cajas.html')
+
+def cajas_lista(request):
+    cajas_data = Caja.objects.all()
+    return render(request, 'manage_models/cajas_lista.html' , {'cajas':cajas_data})
+
+def registrar_caja(request):
+    if request.method == 'POST':
+        form = CajaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cajas_lista')
+    else:
+        form = CajaForm()
+        return render(request, 'manage_models/cajas_reg.html' , {'form':form})
+
+def borrar_caja(request, pk):
+    caja = get_object_or_404(Caja, pk=pk)
+    caja.delete()
+    return redirect('cajas_lista')
+
+def editar_caja(request, pk):
+    caja = get_object_or_404(Caja, pk=pk)
+    if request.method == 'POST':
+        form = CajaForm(request.POST , instance=caja)
+        if form.is_valid():
+            form.save()
+            return redirect('cajas_lista')
+    else:
+        form = CajaForm(instance=caja)
+        return render(request, 'manage_models/cajas_edit.html', {'form':form})
+
+def buscar_caja_clave(request):
+    data = request.GET['busqueda']
+    cajas_filtradas_nombre =  Caja.objects.filter(clave__icontains=data)
+    cajas_nombres = []
+    for caja in cajas_filtradas_nombre:
+        datos = {}
+        datos['clave'] = caja.clave
+        datos['nombre'] = caja.nombre
+        cajas_nombres.append(datos)
+
+    return HttpResponse(json.dumps(cajas_nombres) , 'application/json')

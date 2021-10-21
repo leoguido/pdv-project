@@ -1,0 +1,47 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="usuarios_maincontainer container">
+    <h2 class="usuarios_titulo">| Cajas</h2>
+    <hr>
+    <input type="text" id="buscar_clave_input" placeholder="clave" class="barra_busqueda">
+    <button id="buscar_clave" class="btn buscar_boton"><i class="bi bi-search"></i></button>
+
+    <input type="text" id="buscar_nombre_input" placeholder="nombre" class="barra_busqueda">
+    <button id="buscar_nombre" class="btn buscar_boton"><i class="bi bi-search"></i></button>
+    <table>
+        <thead> 
+            <tr>
+                <th>
+                    <p class="usuarios_espaciado"><strong>Clave</strong></p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado"><strong>Nombre</strong></p>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tabla_cajas">
+            {% for caja in cajas %}
+            <tr>
+                <td>
+                    <p class="usuarios_tablecontent usuarios_espaciado">{{caja.clave}}</p>
+                </td>
+                <td>
+                    <p class="usuarios_tablecontent usuarios_espaciado">{{caja.nombre}}</p>
+                </td>
+                <td >
+                    <a href="{% url 'borrar_caja' pk=caja.pk %}" class="deleteuser"><i class="bi bi-x user_butonicon"></i></a>
+                </td>
+                <td >
+                    <a href="{% url 'editar_caja' pk=caja.pk %}" class="deleteuser"><i class="bi bi-pencil-fill user_butonicon"></i></i></a>
+                </td>
+            {%endfor%}
+        </tbody> 
+    </table>
+    <hr>
+    <a href="{% url 'registrar_caja' %}" class="link_registrar_usuario">Registrar nueva caja</a>
+</div>
+
+<script src="{% static '/table_boxes.js' %}"></script>
+{% endblock %}
