@@ -33,4 +33,5 @@ urlpatterns = [
     path('cajas/administrar/borrar/<int:pk>' , views.borrar_caja , name='borrar_caja'),
     path('cajas/administrar/editar/<int:pk>' , views.editar_caja , name='editar_caja'),
     path('cajas/administrar/buscar/clave/' , views.buscar_caja_clave , name='buscar_caja_clave'),
+    path('cajas/administrar/buscar/nombre/' , views.buscar_caja_nombre , name='buscar_caja_nombre'),
 ]

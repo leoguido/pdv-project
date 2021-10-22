@@ -1,0 +1,14 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<div class="container opciones_fondo"> 
+    <div class="row opciones">
+        {% for caja in cajas %}
+        <div class="col-md-5 home_opcion m-3 mx-auto opcion2"> 
+            <i class="bi bi-archive icono"></i>
+            <a href="{% url 'usar_caja' pk=caja.pk %}" class="opcion_link">{{caja.nombre}}</a>
+        </div>   
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

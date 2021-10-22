@@ -14,6 +14,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'manage_models',
+    'ventas',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -9,10 +9,13 @@ class Marca(models.Model):
 
     def __str__(self):
         return self.nombre
+
+ESTADO = (('A', 'Abierta'), ('C', 'Cerrada'))
     
 class Caja(models.Model):
     clave = models.CharField(max_length=3)
     nombre = models.CharField(max_length=50)
+    estado = models.CharField(choices=ESTADO, max_length=1 , default='C')
 
 class Categoria(models.Model):
     descripcion = models.CharField(max_length=100)
@@ -60,12 +63,10 @@ class DetalleVenta(models.Model):
     importe = models.DecimalField(max_digits=6, decimal_places=2)
     valor_unitario = models.DecimalField(max_digits=5, decimal_places=2)
 
-ESTADO = (('A', 'Abierta'), ('C', 'Cerrada'))
-
 class CorteCaja(models.Model):
-    fecha_inicio = models.DateTimeField(auto_now_add=True, auto_now=False)
+    caja = models.ForeignKey(Caja, blank=True, null=True , on_delete=models.CASCADE)
+    fecha_inicio = models.DateTimeField()
     fecha_cierre = models.DateTimeField(null=True, blank=True, auto_now_add=False, auto_now=False)
     saldo_inicial = models.DecimalField(max_digits=6, decimal_places=2)
-    saldo_final = models.DecimalField(max_digits=6, decimal_places=2)
-    estado = models.CharField(choices=ESTADO, max_length=1)
+    saldo_final = models.DecimalField(max_digits=6, decimal_places=2 , null=True, blank=True)
     usuario = models.ForeignKey(Usuario, on_delete=models.RESTRICT)

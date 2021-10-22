@@ -49,7 +49,7 @@ def editar_usuario(request, pk):
             return redirect('usuarios')
     else:
         form1 = UserForm(instance=usuario)
-        form2 = UsuarioForm(instance=usuario)
+        form2 = UsuarioForm(instance=usuario.details)
         return render(request, 'manage_models/usuarios_edit.html' , {'user_form1' : form1 , 'user_form2' : form2})
 
 def buscar_usuario_nombre(request):
@@ -335,6 +335,20 @@ def buscar_caja_clave(request):
         datos = {}
         datos['clave'] = caja.clave
         datos['nombre'] = caja.nombre
+        datos['pk'] = caja.pk
+        cajas_nombres.append(datos)
+
+    return HttpResponse(json.dumps(cajas_nombres) , 'application/json')
+
+def buscar_caja_nombre(request):
+    data = request.GET['busqueda']
+    cajas_filtradas_nombre =  Caja.objects.filter(nombre__icontains=data)
+    cajas_nombres = []
+    for caja in cajas_filtradas_nombre:
+        datos = {}
+        datos['clave'] = caja.clave
+        datos['nombre'] = caja.nombre
+        datos['pk'] = caja.pk
         cajas_nombres.append(datos)
 
     return HttpResponse(json.dumps(cajas_nombres) , 'application/json')

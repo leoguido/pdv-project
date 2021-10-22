@@ -8,8 +8,8 @@
     <input type="text" id="buscar_clave_input" placeholder="clave" class="barra_busqueda">
     <button id="buscar_clave" class="btn buscar_boton"><i class="bi bi-search"></i></button>
 
-    <input type="text" id="buscar_nombre_input" placeholder="nombre" class="barra_busqueda">
-    <button id="buscar_nombre" class="btn buscar_boton"><i class="bi bi-search"></i></button>
+    <input type="text" id="buscar_nombre_caja_input" placeholder="nombre" class="barra_busqueda">
+    <button id="buscar_nombre_caja" class="btn buscar_boton"><i class="bi bi-search"></i></button>
     <table>
         <thead> 
             <tr>
@@ -43,5 +43,5 @@
     <a href="{% url 'registrar_caja' %}" class="link_registrar_usuario">Registrar nueva caja</a>
 </div>
 
-<script src="{% static '/table_boxes.js' %}"></script>
+<script src="{% static '/table_cajas.js' %}"></script>
 {% endblock %}

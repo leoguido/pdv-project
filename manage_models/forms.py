@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import fields, models
-from .models import Usuario , Cliente , Caja
+from .models import Usuario , Cliente , Caja , CorteCaja
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -28,3 +28,15 @@ class CajaForm(forms.ModelForm):
     class Meta:
         model = Caja
         fields = ('clave' , 'nombre')
+
+class CorteForm(forms.ModelForm):
+
+    class Meta:
+        model = CorteCaja
+        fields = ('saldo_inicial',)
+
+class FinalCorteForm(forms.ModelForm):
+
+    class Meta:
+        model= CorteCaja
+        fields = ('saldo_final',)

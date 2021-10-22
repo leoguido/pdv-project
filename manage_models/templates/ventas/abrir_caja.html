@@ -1,0 +1,13 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<div class="usuarios_maincontainer container">
+    <h2 class="usuarios_titulo">| {{caja.nombre}}</h2>
+    <hr>
+    <form method="POST">{% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Abrir {{caja.nombre}}</button>
+    </form>
+    <hr>
+</div>
+{% endblock %}
