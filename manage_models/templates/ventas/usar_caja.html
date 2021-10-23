@@ -3,12 +3,16 @@
 {% block content %}
 <div class="usuarios_maincontainer container">
     <h2 class="usuarios_titulo">| {{caja.nombre}}</h2>
+    <a href="{% url 'cortes_lista' pk=caja.pk %}">Historial de cortes</a>
     <hr>
-    <h2>CONTENIDO</h2>
+    <div class="col-md-5 home_opcion m-3 mx-auto opcion1"> 
+        <i class="bi bi-coin icono"></i>
+        <a href="#" class="opcion_link opcion_link_venta">Realizar venta</a>
+    </div>  
     <hr>
     <form method="POST">{% csrf_token %}
         {{form.as_p}}
-        <button type="submit">Cerrar {{caja.nombre}}</button>
+        <button type="submit" class="btn btn-danger">Cerrar {{caja.nombre}}</button>
     </form>
 </div>
 {% endblock %}

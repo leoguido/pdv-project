@@ -3,10 +3,11 @@
 {% block content %}
 <div class="usuarios_maincontainer container">
     <h2 class="usuarios_titulo">| {{caja.nombre}}</h2>
+    <a href="{% url 'cortes_lista' pk=caja.pk %}">Historial de cortes</a>
     <hr>
     <form method="POST">{% csrf_token %}
         {{form.as_p}}
-        <button type="submit">Abrir {{caja.nombre}}</button>
+        <button type="submit" class="btn btn-primary">Abrir {{caja.nombre}}</button>
     </form>
     <hr>
 </div>

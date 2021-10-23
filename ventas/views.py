@@ -47,3 +47,8 @@ def cerrar_caja(request, pk):
     caja.estado = 'C'
     caja.save()
     return redirect('usar_caja' , pk=caja.pk)
+
+def cortes_lista(request , pk):
+    caja = get_object_or_404(Caja, pk=pk)
+    cortes = CorteCaja.objects.filter(caja=caja)
+    return render(request, 'ventas/cortes_lista.html', {'cortes':cortes , 'caja_actual':caja})

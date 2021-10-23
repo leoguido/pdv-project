@@ -17,6 +17,9 @@ class Caja(models.Model):
     nombre = models.CharField(max_length=50)
     estado = models.CharField(choices=ESTADO, max_length=1 , default='C')
 
+    def __str__(self):
+        return self.nombre
+
 class Categoria(models.Model):
     descripcion = models.CharField(max_length=100)
 
