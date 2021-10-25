@@ -1,0 +1,52 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="usuarios_maincontainer container">
+    <div class="ui-widget">
+        <label for="name_search">Cliente: </label>
+        <input id="name_search">
+    </div>
+    <div class="ui-widget">
+        <label for="product_search">Producto: </label>
+        <input id="product_search">
+    </div>
+    <button id="agregar_producto" class="btn btn-primary">Agregar producto</button>
+
+    <hr>
+
+    <table>
+        <thead> 
+            <tr>
+                <th>
+                    <p class="usuarios_espaciado"><strong>Cliente</strong></p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado"><strong>Producto</strong></p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado"><strong>Valor unitario</strong></p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado"><strong>Cantidad</strong></p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado"><strong>Descuento (%)</strong></p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado"><strong></strong></p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado"><strong>Importe</strong></p>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tabla_productos">
+    
+        </tbody> 
+    </table>
+</div>
+
+<script src="{% static '/venta.js' %}"></script>
+{% endblock %}

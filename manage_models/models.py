@@ -23,12 +23,18 @@ class Caja(models.Model):
 class Categoria(models.Model):
     descripcion = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.descripcion
+
 class Producto(models.Model):
     nombre = models.CharField(max_length=100)
     precio = models.DecimalField(max_digits=6, decimal_places=2)
     marca = models.ForeignKey(Marca, null=True, blank=True, on_delete=models.RESTRICT)
     categoria = models.ManyToManyField(Categoria, blank=True)
     cantidad = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return self.nombre
 
 
 

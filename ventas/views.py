@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
-from manage_models.models import Caja, CorteCaja , Usuario
+from manage_models.models import Caja, CorteCaja , Usuario , Cliente, Producto
 from manage_models.forms import CorteForm , FinalCorteForm
 from django.utils import timezone
+import json
 
 
 def seleccion_caja(request):
@@ -52,3 +53,29 @@ def cortes_lista(request , pk):
     caja = get_object_or_404(Caja, pk=pk)
     cortes = CorteCaja.objects.filter(caja=caja)
     return render(request, 'ventas/cortes_lista.html', {'cortes':cortes , 'caja_actual':caja})
+
+def venta(request, pk):
+    caja = get_object_or_404(Caja, pk=pk)
+    return render(request, 'ventas/venta.html' , {'caja':caja})
+
+def get_clientes(request):
+    clientes = Cliente.objects.all()
+    clientes_nombre = []
+    for cliente in clientes:
+        clientes_nombre.append(cliente.razon_social)
+    return HttpResponse(json.dumps(clientes_nombre) , 'application/json')
+
+def get_productos(request):
+    productos = Producto.objects.all()
+    producto_nombre = []
+    for producto in productos:
+        producto_nombre.append(str(producto.nombre))
+    return HttpResponse(json.dumps(producto_nombre) , 'application/json')
+
+def get_producto(request):
+    data = request.GET['producto']
+    producto = get_object_or_404(Producto, nombre=data)
+    producto_dict = {}
+    producto_dict['nombre'] = producto.nombre
+    producto_dict['precio'] = str(producto.precio)
+    return HttpResponse(json.dumps(producto_dict) , 'application/json')

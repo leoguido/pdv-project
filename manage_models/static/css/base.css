@@ -145,3 +145,7 @@ form input{
 .link_registrar_usuario:hover{
     color: black;
 }
+
+.ui-autocomplete {
+    background: var(--color3);
+  }
