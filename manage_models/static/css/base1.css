@@ -147,5 +147,6 @@ form input{
 }
 
 .ui-autocomplete {
-    background: var(--color3);
+    background: white;
+    width: 300px;
   }
