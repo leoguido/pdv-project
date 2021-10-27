@@ -79,3 +79,6 @@ def get_producto(request):
     producto_dict['nombre'] = producto.nombre
     producto_dict['precio'] = str(producto.precio)
     return HttpResponse(json.dumps(producto_dict) , 'application/json')
+
+def registrar_venta(request):
+    return HttpResponse(json.dumps(request.GET) , 'application/json')
