@@ -1,6 +1,8 @@
 let ventas = 0;
+let cajaId = $('#caja_id').val();
 let data_ = {
     cliente: '',
+    caja: cajaId,
     ventas: [],
 };
 
@@ -11,17 +13,17 @@ function evaluar_venta(numero_venta, cantidad, nombre, descuento, importe){
     let exists = false;
     let timer = 0;
     for(numero of data_.ventas){
-        if(numero_venta == numero['venta'].numero){
+        if(numero_venta == numero.numero){
             exists = true;
             break;
         }
         timer++;
     }
     if(exists){
-        data_.ventas[timer] = {'venta':{numero:numero_venta, cantidad_:cantidad, productos:nombre, descuento_:descuento, importe_:importe}}
+        data_.ventas[timer] = {numero:numero_venta, cantidad_:cantidad, productos:nombre, descuento_:descuento, importe_:importe}
     }
     else{
-        data_.ventas.push({'venta':{numero:numero_venta, cantidad_:cantidad, productos:nombre, descuento_:descuento, importe_:importe}});
+        data_.ventas.push({numero:numero_venta, cantidad_:cantidad, productos:nombre, descuento_:descuento, importe_:importe});
     }
     console.log(data_);
 }
@@ -121,9 +123,10 @@ $(function(){
     });
 
     $('#proceder_venta').click(function(){
+        evaluar_cliente();
         $.ajax({
             url: '/cajas/usar/venta/',
-            data: data_,
+            data:{json: JSON.stringify(data_)},
             type: 'GET',
             success: function(response){
                 

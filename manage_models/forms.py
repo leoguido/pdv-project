@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import fields, models
-from .models import Usuario , Cliente , Caja , CorteCaja
+from .models import Usuario , Cliente , Caja , CorteCaja, Venta, DetalleVenta
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 

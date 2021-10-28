@@ -121,8 +121,8 @@ form input{
     -webkit-box-shadow: 0px 23px 10px -30px #000000; 
     box-shadow: 0px 23px 30px -30px #000000;
 }
-.usuarios_espaciado{
-    margin: 0 10px;
+.tabla{
+    border-collapse: separate;
 }
 .deleteuser{
     padding: 2px 5px;

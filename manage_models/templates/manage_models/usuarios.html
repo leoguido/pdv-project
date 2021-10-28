@@ -23,23 +23,29 @@
         <option value="V">VENDEDOR</option>
     </select>
     <button id="buscar_tipo" class="btn buscar_boton"><i class="bi bi-search"></i></button> 
-    <table>
+    <table class="table table-hover tabla">
         <thead> 
             <tr>
                 <th>
-                    <p class="usuarios_espaciado"><strong>Nombre</strong></p>
+                    <p class="usuarios_espaciado">Nombre</p>
                 </th>
                 <th>
-                    <p class="usuarios_espaciado"><strong>Apellidos</strong></p>
+                    <p class="usuarios_espaciado">Apellidos</p>
                 </th>
                 <th>
-                    <p class="usuarios_espaciado"><strong>E-mail</strong></p>
+                    <p class="usuarios_espaciado">E-mail</strong></p>
                 </th>
                 <th>
-                    <p class="usuarios_espaciado"><strong>Teléfono</strong></p>
+                    <p class="usuarios_espaciado">Teléfono</p>
                 </th>
                 <th>
-                    <p class="usuarios_espaciado"><strong>Tipo</strong></p>
+                    <p class="usuarios_espaciado">Tipo</p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado"></p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado"></p>
                 </th>
             </tr>
         </thead>
@@ -71,7 +77,6 @@
             {%endfor%}
         </tbody> 
     </table>
-    <hr>
     <a href="{% url 'registrar_usuario' %}" class="link_registrar_usuario">Registrar nuevo usuario</a>
 </div>
 

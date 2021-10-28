@@ -65,7 +65,7 @@ class Venta(models.Model):
     
     
 class DetalleVenta(models.Model):
-    venta = models.ForeignKey(Venta, null=False, blank=False, on_delete=models.CASCADE)
+    venta = models.ForeignKey(Venta, null=False, blank=False, on_delete=models.CASCADE, related_name='details')
     cantidad = models.DecimalField(max_digits=6, decimal_places=2)
     productos = models.ForeignKey(Producto, on_delete=models.RESTRICT)
     descuento = models.DecimalField(max_digits=6, decimal_places=2)

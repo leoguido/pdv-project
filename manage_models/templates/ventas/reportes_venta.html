@@ -1,0 +1,78 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<div class="usuarios_maincontainer container">
+    <h2 class="usuarios_titulo">| Registro de ventas</h2>
+    <hr>
+    <table class="table table-hover tabla">
+        <thead> 
+            <tr>
+                <th>
+                    <p class="usuarios_espaciado">Producto</p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado">Fecha</p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado">Cliente</p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado">Vendedor</p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado">Caja</p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado">Cantidad</p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado">Valor unitario</p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado">Descuento</p>
+                </th>
+                <th>
+                    <p class="usuarios_espaciado">Importe</p>
+                </th>
+            </tr>
+        </thead>
+        {% for venta in ventas %}
+            {% for detalle in detalles %}
+            {% if detalle.venta == venta %}
+            <tbody id="tabla_venta">
+                <tr>
+                    <td>
+                        <p class="usuarios_tablecontent usuarios_espaciado">{{detalle.productos.nombre}}</p>
+                    </td>
+                    <td>
+                        <p class="usuarios_tablecontent usuarios_espaciado">{{venta.fecha_venta}}</p>
+                    </td>
+                    <td>
+                        <p class="usuarios_tablecontent usuarios_espaciado">{{venta.cliente.razon_social}}</p>
+                    </td>
+                    <td>
+                        <p class="usuarios_tablecontent usuarios_espaciado">{{venta.vendedor.usuario.get_full_name}}</p>
+                    </td>
+                    <td>
+                        <p class="usuarios_tablecontent usuarios_espaciado">{{venta.caja.nombre}}</p>
+                    </td>
+                    <td>
+                        <p class="usuarios_tablecontent usuarios_espaciado">{{detalle.cantidad}}</p>
+                    </td>
+                    <td>
+                        <p class="usuarios_tablecontent usuarios_espaciado">{{detalle.valor_unitario}}</p>
+                    </td>
+                    <td>
+                        <p class="usuarios_tablecontent usuarios_espaciado">{{detalle.descuento}}%</p>
+                    </td>
+                    <td>
+                        <p class="usuarios_tablecontent usuarios_espaciado">{{detalle.importe}}</p>
+                    </td>
+                </tr>
+            </tbody>
+            {% endif %}
+            {% endfor %}
+    {%endfor%}
+        </table>
+</div>
+{% endblock %}

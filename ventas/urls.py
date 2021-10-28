@@ -15,4 +15,6 @@ urlpatterns = [
     path('productos/data/nombres/' , views.get_productos, name='productos_namedata'),
     path('producto/get/nombre/' , views.get_producto, name='get_producto'),
     path('cajas/usar/venta/' , views.registrar_venta, name='registrar_venta'),
+
+    path('reportes/' , views.reportes_venta, name='reportes_venta'),
 ]

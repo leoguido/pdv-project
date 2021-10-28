@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render, HttpResponse
-from manage_models.models import Caja, CorteCaja , Usuario , Cliente, Producto
+from manage_models.models import Caja, CorteCaja , Usuario , Cliente, Producto, Venta, DetalleVenta
 from manage_models.forms import CorteForm , FinalCorteForm
 from django.utils import timezone
 import json
@@ -81,4 +81,19 @@ def get_producto(request):
     return HttpResponse(json.dumps(producto_dict) , 'application/json')
 
 def registrar_venta(request):
-    return HttpResponse(json.dumps(request.GET) , 'application/json')
+    print(request.GET)
+    data = json.loads(request.GET['json'])
+    cliente = get_object_or_404(Cliente, razon_social=data['cliente'])
+    caja = get_object_or_404(Caja, pk=data['caja'])
+    usuario = get_object_or_404(Usuario, usuario=request.user)
+    nueva_venta = Venta.objects.create(cliente=cliente, caja=caja, vendedor=usuario)
+    for venta_ in data['ventas']:
+        producto = get_object_or_404(Producto, nombre=venta_['productos'])
+        producto.cantidad = producto.cantidad - int(venta_['cantidad_'])
+        DetalleVenta.objects.create(venta=nueva_venta, cantidad = int(venta_['cantidad_']) , productos=producto, descuento = float(venta_['descuento_']), importe = float(venta_['importe_']), valor_unitario = producto.precio)
+    return HttpResponse(Venta.objects.all())
+
+def reportes_venta(request):
+    ventas = Venta.objects.all()
+    detalles = DetalleVenta.objects.all()
+    return render(request, 'ventas/reportes_venta.html', {'ventas':ventas, 'detalles':detalles})

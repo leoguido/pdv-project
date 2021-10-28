@@ -1,70 +1,111 @@
-{% extends 'home/base.html' %}
 {% load static %}
 
-
-{% block content %}
-<div class="usuarios_maincontainer container">
-    <div class="ui-widget">
-        <label for="name_search">Cliente: </label>
-        <input id="name_search">
-    </div>
-    <div class="ui-widget">
-        <label for="product_search">Producto: </label>
-        <input id="product_search">
-    </div>
-    <button id="agregar_producto" class="btn btn-primary">Agregar producto</button>
-
-    <hr>
-
-    <table>
-        <thead> 
-            <tr>
-                <th>
-                    <p class="usuarios_espaciado"><strong>Producto</strong></p>
-                </th>
-                <th>
-                    <p class="usuarios_espaciado"><strong>Valor unitario</strong></p>
-                </th>
-                <th>
-                    <p class="usuarios_espaciado"><strong>Cantidad</strong></p>
-                </th>
-                <th>
-                    <p class="usuarios_espaciado"><strong>Descuento (%)</strong></p>
-                </th>
-                <th>
-                    <p class="usuarios_espaciado"><strong></strong></p>
-                </th>
-                <th>
-                    <p class="usuarios_espaciado"><strong>Importe</strong></p>
-                </th>
-            </tr>
-        </thead>
-        <tbody id="tabla_productos">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto de venta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="{% static '/jquery.js' %}"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js" integrity="sha256-xH4q8N0pEzrZMaRmd7gQVcTZiFei+HfRTBPJ1OGXC0k=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
             
-            <td>
-                
-            </td>
-            <td>
-                
-            </td>
-            <td>
-                
-            </td>
-            <td>
-                
-            </td>
-            <td>
-                <p><strong>Total: </strong></p>
-            </td>
-            <td>
-                <p id="total">0</p>
-            </td>
-        </tbody> 
-    </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button class="btn btn-success" id="proceder_venta">Vender</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <header>
+        <h1><a href="{% url 'home' %}" class="titulo"> Punto de venta </a></h1>
+        <div class="usuario">
+            <p class="saludo">Hola <strong>{{ user.get_full_name }}</strong></p>
+            <p><a href="{% url 'logout' %}" class=logout>Cerrar sesión</a></p>
+        </div>
+    </header>
+    <div class="usuarios_maincontainer container">
+        <div class="ui-widget">
+            <label for="name_search">Cliente: </label>
+            <input id="name_search">
+        </div>
+        <div class="ui-widget">
+            <label for="product_search">Producto: </label>
+            <input id="product_search">
+        </div>
+        <button id="agregar_producto" class="btn btn-primary">Agregar producto</button>
 
-    <button class="btn btn-success" id="proceder_venta">Vender</button>
-</div>
+        <hr>
+
+        <table class="table table-hover tabla">
+            <thead> 
+                <tr>
+                    <th>
+                        <p class="usuarios_espaciado"><strong>Producto</strong></p>
+                    </th>
+                    <th>
+                        <p class="usuarios_espaciado"><strong>Valor unitario</strong></p>
+                    </th>
+                    <th>
+                        <p class="usuarios_espaciado"><strong>Cantidad</strong></p>
+                    </th>
+                    <th>
+                        <p class="usuarios_espaciado"><strong>Descuento (%)</strong></p>
+                    </th>
+                    <th>
+                        <p class="usuarios_espaciado"><strong></strong></p>
+                    </th>
+                    <th>
+                        <p class="usuarios_espaciado"><strong>Importe</strong></p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tabla_productos">
+                
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    <p><strong>Total: </strong></p>
+                </td>
+                <td>
+                    <p id="total">0</p>
+                </td>
+            </tbody> 
+        </table>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">$ Pagar $</button>
+    </div>
+
+<input type="text" hidden disabled value="{{caja.pk}}" id="caja_id">
 
 
-<script src="{% static '/ventas.js' %}"></script>
-{% endblock %}
+<script src="{% static '/venta.js' %}"></script>
+</body>
+</html>

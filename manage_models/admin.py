@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Marca ,Caja, CorteCaja, Producto, Categoria
+from .models import Marca, Producto, Categoria
 
 # Register your models here.
 admin.site.register(Marca)
