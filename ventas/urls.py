@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path , include
 from . import views
+from pdv_project import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -15,6 +17,8 @@ urlpatterns = [
     path('productos/data/nombres/' , views.get_productos, name='productos_namedata'),
     path('producto/get/nombre/' , views.get_producto, name='get_producto'),
     path('cajas/usar/venta/' , views.registrar_venta, name='registrar_venta'),
+    path('cajas/usar/venta/descargar/' , views.descargar_venta, name='descargar_venta'),
 
     path('reportes/' , views.reportes_venta, name='reportes_venta'),
-]
+    path('reportes/buscar/' , views.buscar_venta, name='buscar_descuento'),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

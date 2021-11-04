@@ -1,22 +1,26 @@
-from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render , HttpResponse
 from .models import Usuario , Cliente , Caja
 from .forms import UserForm , UsuarioForm, ClienteForm, CajaForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 import json
 
 
 def home(request):
     if request.user.is_authenticated:
+        print('hola')
         user = get_object_or_404(User, pk=request.user.id)
+        request.session['cajero'] = 'leo'
         return render(request, 'home/home.html' , {'user': user})
     else:
         return redirect('login')
 
+@login_required
 def usuarios(request):
     users = User.objects.all()
     return render(request , 'manage_models/usuarios.html' , {'usuarios':users})
 
+@login_required
 def registrar_usuario(request):
     if request.method == 'POST':
         form1 = UserForm(request.POST)
@@ -32,11 +36,13 @@ def registrar_usuario(request):
         form2 = UsuarioForm()
         return render(request , 'manage_models/usuarios_reg.html' , {'user_form1' : form1 , 'user_form2' : form2})
 
+@login_required
 def borrar_usuario(request, pk):
     usuario = get_object_or_404(User, pk=pk)
     usuario.delete()
     return redirect('usuarios')
 
+@login_required
 def editar_usuario(request, pk):
     usuario = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
@@ -137,10 +143,12 @@ def buscar_usuario_tipo(request):
 
     return HttpResponse(json.dumps(usuarios_nombres) , 'application/json')
 
+@login_required
 def clientes(request):
     clientes_lista = Cliente.objects.all()
     return render(request, 'manage_models/clientes.html' , {'clientes':clientes_lista})
 
+@login_required
 def registrar_cliente(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
@@ -151,11 +159,13 @@ def registrar_cliente(request):
         form = ClienteForm()
         return render(request , 'manage_models/clientes_reg.html' , {'form':form})
 
+@login_required
 def borrar_cliente(request , pk):
     cliente = get_object_or_404(Cliente, pk=pk)
     cliente.delete()
     return redirect('clientes')
 
+@login_required
 def editar_cliente(request, pk):
     cliente = get_object_or_404(Cliente, pk=pk)
     if request.method == 'POST':
@@ -294,13 +304,16 @@ def buscar_cliente_domicilio(request):
 
     return HttpResponse(json.dumps(clientes_nombres) , 'application/json')
 
+@login_required
 def cajas(request):
     return render(request, 'manage_models/cajas.html')
 
+@login_required
 def cajas_lista(request):
     cajas_data = Caja.objects.all()
     return render(request, 'manage_models/cajas_lista.html' , {'cajas':cajas_data})
 
+@login_required
 def registrar_caja(request):
     if request.method == 'POST':
         form = CajaForm(request.POST)
@@ -311,11 +324,13 @@ def registrar_caja(request):
         form = CajaForm()
         return render(request, 'manage_models/cajas_reg.html' , {'form':form})
 
+@login_required
 def borrar_caja(request, pk):
     caja = get_object_or_404(Caja, pk=pk)
     caja.delete()
     return redirect('cajas_lista')
 
+@login_required
 def editar_caja(request, pk):
     caja = get_object_or_404(Caja, pk=pk)
     if request.method == 'POST':

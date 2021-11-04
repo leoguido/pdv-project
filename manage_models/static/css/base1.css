@@ -150,3 +150,8 @@ form input{
     background: white;
     width: 300px;
   }
+
+.remove_link_decoration{
+    color: white;
+    text-decoration: none;
+}

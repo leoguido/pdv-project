@@ -1,8 +1,37 @@
 {% extends 'home/base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="usuarios_maincontainer container">
-    <h2 class="usuarios_titulo">| Registro de ventas</h2>
+    <div id="filters">
+        <h2 class="usuarios_titulo">| Registro de ventas</h2>
+
+        <input type="text" id="buscar_producto_input" placeholder="producto" class="barra_busqueda" name="productos__nombre">
+
+        <label for="buscar_fecha_input1">Fecha: </label>
+        <input type="datetime-local" id="buscar_fecha_input1" placeholder="fecha" class="barra_busqueda">
+        <input type="datetime-local" id="buscar_fecha_input2" placeholder="fecha" class="barra_busqueda">
+
+        <input type="text" id="buscar_cliente_input" placeholder="cliente" class="barra_busqueda" name="venta__cliente__razon_social">
+
+        <input type="text" id="buscar_vendedor_input" placeholder="vendedor" class="barra_busqueda" name="venta__vendedor__usuario__username">
+
+        <input type="text" id="buscar_caja_input" placeholder="caja" class="barra_busqueda" name="venta__caja__nombre">
+
+        <input type="number" id="buscar_cantidad_input" placeholder="cantidad" class="barra_busqueda">
+
+        <label for="buscar_valor_input1">Valor unitario: </label>
+        <input type="number" id="buscar_valor_input1" class="barra_busqueda" value="0">
+        <input type="number" id="buscar_valor_input2" class="barra_busqueda" value="9999">
+
+        <input type="number" id="buscar_descuento_input" placeholder="descuento (%)" class="barra_busqueda">
+
+        <label for="buscar_importe_input1">Importe: </label>
+        <input type="number" id="buscar_importe_input1" class="barra_busqueda" value="0">
+        <input type="number" id="buscar_importe_input2" class="barra_busqueda" value="9999">
+        <button id="buscar_descuento" class="btn buscar_boton"><i class="bi bi-search"></i></button>
+    </div>
+
     <hr>
     <table class="table table-hover tabla">
         <thead> 
@@ -36,10 +65,10 @@
                 </th>
             </tr>
         </thead>
+        <tbody id="tabla_venta">
         {% for venta in ventas %}
             {% for detalle in detalles %}
             {% if detalle.venta == venta %}
-            <tbody id="tabla_venta">
                 <tr>
                     <td>
                         <p class="usuarios_tablecontent usuarios_espaciado">{{detalle.productos.nombre}}</p>
@@ -51,7 +80,7 @@
                         <p class="usuarios_tablecontent usuarios_espaciado">{{venta.cliente.razon_social}}</p>
                     </td>
                     <td>
-                        <p class="usuarios_tablecontent usuarios_espaciado">{{venta.vendedor.usuario.get_full_name}}</p>
+                        <p class="usuarios_tablecontent usuarios_espaciado">{{venta.vendedor.usuario.username}}</p>
                     </td>
                     <td>
                         <p class="usuarios_tablecontent usuarios_espaciado">{{venta.caja.nombre}}</p>
@@ -69,10 +98,13 @@
                         <p class="usuarios_tablecontent usuarios_espaciado">{{detalle.importe}}</p>
                     </td>
                 </tr>
-            </tbody>
             {% endif %}
             {% endfor %}
     {%endfor%}
-        </table>
+            </tbody>
+    </table>
+    <button type="button" class="btn btn-success" id="descargar">Descargar en formato Excel</button>
 </div>
+
+<script src="{% static '/table_ventas.js' %}"></script>
 {% endblock %}

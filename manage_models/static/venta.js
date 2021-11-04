@@ -94,6 +94,7 @@ $(function(){
                         total = total + parseFloat($(this).text());
                     });
                     $('#total').text(Math.round((total + Number.EPSILON) * 100) / 100);
+                    $('#total1').text(Math.round((total + Number.EPSILON) * 100) / 100);
                     nombre = $(`#nombre_producto${numero}`).text();
                     evaluar_venta(numero, cantidad, nombre, descuento, importe);
                     total = 0;
@@ -113,6 +114,7 @@ $(function(){
                         total = total + parseFloat($(this).text());
                     });
                     $('#total').text(Math.round((total + Number.EPSILON) * 100) / 100);
+                    $('#total1').text(Math.round((total + Number.EPSILON) * 100) / 100);
                     nombre = $(`#nombre_producto${numero}`).text();
                     evaluar_venta(numero, cantidad, nombre, descuento, importe);
                     total = 0;
@@ -124,16 +126,39 @@ $(function(){
 
     $('#proceder_venta').click(function(){
         evaluar_cliente();
+        data_['total'] = $('#total').text();
         $.ajax({
             url: '/cajas/usar/venta/',
             data:{json: JSON.stringify(data_)},
             type: 'GET',
             success: function(response){
-                
+                $('#modal-body').html('<h2>Venta realizada con éxito</h2><button class="btn btn-secondary" id="descargar_pdf"><a class="remove_link_decoration" href="/Files/recibo.pdf" download="recibo.pdf">Descargar recibo</a></button>');
+                $('#modal-footer').html('<button class="btn btn-success" id="finalizar_venta">Finalizar venta</button>');
+                /* $('#descargar_pdf').click(function(){
+                    $.ajax({
+                        url: '/cajas/usar/venta/descargar/'
+                    }) */
+                    /* let url = `/cajas/usar/venta/descargar/`;
+                    $(location).attr('href',url); */
+                /* }); */
+                $('#finalizar_venta').click(function(){
+                    id = $('#caja_id').val()
+                    let url = `/cajas/usar/${id}`;  
+                    $(location).attr('href',url);
+                });
             },
             error: function(error){
                 console.log(error);
             }
         })
+    });
+
+    $('#monto_pagado').change(function(){
+        importe = parseFloat($('#total1').text());
+        pagado = $('#monto_pagado').val();
+        if (pagado >= importe){
+            cambio = pagado - importe
+            $('#cambio').text(cambio);
+        }
     });
 });
