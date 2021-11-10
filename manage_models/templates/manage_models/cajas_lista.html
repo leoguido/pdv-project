@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+
+{% if request.session.tipo_usuario == 'A' %}
 <div class="usuarios_maincontainer container">
     <h2 class="usuarios_titulo">| Cajas</h2>
     <hr>
@@ -44,4 +46,6 @@
 </div>
 
 <script src="{% static '/table_cajas.js' %}"></script>
+
+{% endif %}
 {% endblock %}

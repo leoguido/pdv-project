@@ -8,9 +8,9 @@ import json
 
 def home(request):
     if request.user.is_authenticated:
-        print('hola')
         user = get_object_or_404(User, pk=request.user.id)
-        request.session['cajero'] = 'leo'
+        request.session['tipo_usuario'] = request.user.details.tipo_usuario
+        request.session['ventas'] = {}
         return render(request, 'home/home.html' , {'user': user})
     else:
         return redirect('login')

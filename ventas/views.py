@@ -31,6 +31,7 @@ def usar_caja(request, pk):
     if caja.estado == 'A':
         cortes = CorteCaja.objects.filter(caja=caja).filter(fecha_cierre__isnull=True).filter(saldo_final__isnull=True)
         corte = get_object_or_404(CorteCaja, pk=cortes[0].pk)
+        ventas = request.session['ventas'][str(caja.pk)]
         if request.method == 'POST':
             form = FinalCorteForm(request.POST, instance=corte)
             if form.is_valid():
@@ -39,16 +40,21 @@ def usar_caja(request, pk):
                 corte_final.save()
                 return redirect('cerrar_caja' , pk=caja.pk)
         else:
+            total = corte.saldo_inicial + request.session['ventas'][str(pk)]
             form = FinalCorteForm()
-            return render(request , 'ventas/usar_caja.html' ,{'caja': caja , 'corte':corte , 'form':form})
+            return render(request , 'ventas/usar_caja.html' ,{'caja': caja , 'corte':corte , 'form':form, 'ventas':ventas, 'total':total})
 
 def abrir_caja(request, pk):
+    request.session['ventas'][str(pk)] = 0
+    request.session.modified = True
     caja = get_object_or_404(Caja, pk=pk)
     caja.estado = 'A'
     caja.save()
     return redirect('usar_caja' , pk=caja.pk)
 
 def cerrar_caja(request, pk):
+    request.session['ventas'][str(pk)] = 0
+    request.session.modified = True
     caja = get_object_or_404(Caja, pk=pk)
     caja.estado = 'C'
     caja.save()
@@ -119,6 +125,10 @@ def registrar_venta(request):
     c.drawString(260,50, 'Gracias por comprar!')
     c.showPage()
     c.save()
+
+    venta_actual = request.session['ventas'][str(data['caja'])]
+    request.session['ventas'][str(data['caja'])] = float(venta_actual) + float(data['total'])
+    request.session.modified = True
 
     return HttpResponse(Venta.objects.all())
 

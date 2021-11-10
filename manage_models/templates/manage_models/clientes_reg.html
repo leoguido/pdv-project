@@ -1,6 +1,9 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
+
+{% if request.session.tipo_usuario == 'A' %}
+
 <div class="usuarios_maincontainer container">
     <h2 class="usuarios_titulo">| Registrar cliente</h2>
     <form method="POST">{% csrf_token %}
@@ -8,4 +11,6 @@
         <button type="submit" class="btn btn-outline-secondary">Guardar</button>
     </form>
 </div> 
+
+{% endif %}
 {% endblock %}

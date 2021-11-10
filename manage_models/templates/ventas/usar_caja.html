@@ -1,18 +1,67 @@
-{% extends 'home/base.html' %}
+{% load static %}
 
-{% block content %}
-<div class="usuarios_maincontainer container">
-    <h2 class="usuarios_titulo">| {{caja.nombre}}</h2>
-    <a href="{% url 'cortes_lista' pk=caja.pk %}">Historial de cortes</a>
-    <hr>
-    <div class="col-md-5 home_opcion m-3 mx-auto opcion1"> 
-        <i class="bi bi-coin icono"></i>
-        <a href="{% url 'venta' pk=caja.pk %}" class="opcion_link opcion_link_venta">Realizar venta</a>
-    </div>  
-    <hr>
-    <form method="POST">{% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" class="btn btn-danger">Cerrar {{caja.nombre}}</button>
-    </form>
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto de venta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base1.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="{% static '/jquery.js' %}"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js" integrity="sha256-xH4q8N0pEzrZMaRmd7gQVcTZiFei+HfRTBPJ1OGXC0k=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirmar cierre</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <h4 style="margin: 20px 0;">Dinero inicial del corte: {{ corte.saldo_inicial }}</h4>
+                <h4 style="margin: 20px 0;">Monto vendido en este corte: {{ ventas }}</h4>
+                <h4 style="margin: 20px 0;">Monto total: {{ total }}</h4>
+                <h4 style="margin: 20px 0;">Confirme el dinero en caja</h4>
+                <form method="POST">{% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit" class="btn btn-danger">Cerrar {{caja.nombre}}</button>
+                </form>
+            </div>
+            <div class="modal-footer" id="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <header>
+        <h1><a href="{% url 'home' %}" class="titulo"> Punto de venta </a></h1>
+        <div class="usuario">
+            <p class="saludo">Hola <strong>{{ user.get_full_name }}</strong></p>
+            <p><a href="{% url 'logout' %}" class=logout>Cerrar sesión</a></p>
+        </div>
+    </header>
+
+    <div class="usuarios_maincontainer container">
+        <h2 class="usuarios_titulo">| {{caja.nombre}}</h2>
+        <a href="{% url 'cortes_lista' pk=caja.pk %}">Historial de cortes</a>
+        <hr>
+        <div class="col-md-5 home_opcion m-3 mx-auto opcion1"> 
+                <i class="bi bi-coin icono"></i>
+                <a href="{% url 'venta' pk=caja.pk %}" class="opcion_link opcion_link_venta">Realizar venta</a>
+        </div>  
+        <hr>
+
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Cerrar caja</button>
+    </div>
+
+    
+</body>
+</html>
